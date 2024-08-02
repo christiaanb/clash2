@@ -132,11 +132,9 @@ maybeIntegral Proxy v =
   && toInteger v > toInteger (minBound @b)
 
 -- | Like 'fromIntegral', but returns 'Nothing' if /a/ is out of bounds for /b/.
--- Useful when you "know" /a/ can't be out of bounds, but would like to have your
--- assumptions checked.
---
--- * __NB__: Check only affects simulation. I.e., no checks will be inserted
--- into the generated HDL
+-- Useful when you do not know /a/ can be out of bounds, and would like to have
+-- your assumptions checked.
+
 -- * __NB__: 'fromIntegral' is not well suited for Clash as it will go through
 -- 'Integer' which is arbitrarily bounded in HDL. Instead use
 -- 'Clash.Class.BitPack.bitCoerce' and the 'Resize' class.
@@ -150,11 +148,8 @@ maybeFromIntegral v =
     else Nothing
 
 -- | Like 'resize', but returns 'Nothing' if /f a/ is out of bounds for /f b/.
--- Useful when you "know" /f a/ can't be out of bounds, but would like to have your
--- assumptions checked.
---
--- __NB__: Check only affects simulation. I.e., no checks will be inserted
--- into the generated HDL
+-- Useful when you do not know /f a/ can be out of bounds, and would like to
+-- have your assumptions checked.
 maybeResize ::
   forall a b f.
   ( Resize f
@@ -167,11 +162,8 @@ maybeResize v =
     else Nothing
 
 -- | Like 'truncateB', but returns 'Nothing' if /f (a + b)/ is out of bounds for
--- /f a/. Useful when you "know" /f (a + b)/ can't be out of bounds, but would
--- like to have your assumptions checked.
---
--- __NB__: Check only affects simulation. I.e., no checks will be inserted
--- into the generated HDL
+-- /f a/. Useful when you do not know /f (a + b)/ can be out of bounds, and
+-- would like to have your assumptions checked.
 maybeTruncateB ::
   forall a b f.
   ( Resize f
